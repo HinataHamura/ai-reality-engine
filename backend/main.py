@@ -276,7 +276,6 @@ Use language: {language}.
             # Skip malformed entries instead of failing hard
             continue
     return claims
-
 # ---------------------------------------------------------------------
 # Step 2 – Web retrieval (Tavily 2025 API)
 # ---------------------------------------------------------------------
@@ -284,8 +283,7 @@ async def retrieve_evidence_for_claim(claim: Claim, max_results: int = 5) -> Lis
     if not TAVILY_API_KEY:
         return []
 
-    url = "https://api.tavily.com/v1/search"
-
+    url = "https://api.tavily.com/v1/search"   # FIXED
 
     headers = {
         "Authorization": f"Bearer {TAVILY_API_KEY}",
@@ -295,9 +293,9 @@ async def retrieve_evidence_for_claim(claim: Claim, max_results: int = 5) -> Lis
     payload = {
         "query": claim.text,
         "max_results": max_results,
+        "search_depth": "basic",
         "include_answer": False,
         "include_raw_content": False,
-        "search_depth": "basic",
         "topic": "general"
     }
 
@@ -311,20 +309,18 @@ async def retrieve_evidence_for_claim(claim: Claim, max_results: int = 5) -> Lis
         print("[TAVILY ERROR]", e)
         return []
 
-    results = data.get("results", [])
-    snippets = []
-
-    for res in results:
-        snippets.append(
+    evidence_list = []
+    for res in data.get("results", []):
+        evidence_list.append(
             EvidenceSnippet(
                 source="web:tavily",
                 url=res.get("url"),
                 title=res.get("title"),
-                snippet=res.get("content") or "",
+                snippet=res.get("content") or ""
             )
         )
 
-    return snippets
+    return evidence_list
 
 
 
