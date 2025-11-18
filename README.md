@@ -75,20 +75,7 @@ Evidence Search	DuckDuckGo (Free)
 LLM Reasoning	Grok: llama-3.3-70b-versatile
 Hosting	Render / GitHub Codespaces
 Ops	Opus Workflow automation
-🏗️ Project Structure
-ai-reality-engine/
-│
-├── backend/
-│   ├── main.py            # Fact-checking API (FastAPI)
-│   ├── requirements.txt
-│
-├── frontend/
-│   ├── app.py             # Streamlit UI
-│
-├── render.yaml            # Render deployment config
-├── README.md              # (this file)
-├── AI Reality Engine.mp4  # Demo video
-└── video-*.mp4            # Frontend video
+
 
 ⚙️ Installation & Setup
 1. Clone the Repository
