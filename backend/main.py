@@ -279,53 +279,52 @@ Use language: {language}.
 # ---------------------------------------------------------------------
 # Step 2 – Web retrieval (Correct Tavily API 2025)
 # ---------------------------------------------------------------------
-async def retrieve_evidence_for_claim(claim: Claim, max_results: int = 5) -> List[EvidenceSnippet]:
-    if not TAVILY_API_KEY:
-        return []
+async def retrieve_evidence_for_claim(claim: Claim, max_results: int = 5):
+    import httpx
 
-    url = "https://api.tavily.com/v1/search"
-
-    headers = {
-        "Authorization": f"Bearer {TAVILY_API_KEY}",
-        "Content-Type": "application/json",
-    }
-
-    payload = {
-        "query": claim.text,
-        "search_depth": "basic",
-        "max_results": max_results,
-        "include_answer": False,
-        "include_raw_content": False
+    url = "https://api.duckduckgo.com/"
+    params = {
+        "q": claim.text,
+        "format": "json",
+        "no_html": 1,
+        "no_redirect": 1
     }
 
     try:
-        async with httpx.AsyncClient(timeout=30) as client:
-            response = await client.post(url, headers=headers, json=payload)
-            response.raise_for_status()
-            data = response.json()
-
-    except httpx.HTTPStatusError as http_error:
-        print("[TAVILY ERROR] Status:", http_error.response.status_code, http_error.response.text)
-        return []
+        async with httpx.AsyncClient(timeout=20) as client:
+            r = await client.get(url, params=params)
+            r.raise_for_status()
+            data = r.json()
     except Exception as e:
-        print("[TAVILY ERROR] Unknown:", e)
+        print("DDG ERROR:", e)
         return []
 
-    results = data.get("results", [])
-    evidence_list = []
+    snippets = []
 
-    for res in results:
-        evidence_list.append(
+    # Main abstract
+    if data.get("Abstract"):
+        snippets.append(
             EvidenceSnippet(
-                source="web:tavily",
-                url=res.get("url"),
-                title=res.get("title"),
-                snippet=res.get("content") or ""
+                source="web:ddg",
+                title=data.get("Heading"),
+                url=data.get("AbstractURL"),
+                snippet=data.get("Abstract")
             )
         )
 
-    return evidence_list
+    # Related topic snippets
+    for topic in data.get("RelatedTopics", [])[:3]:
+        if isinstance(topic, dict) and topic.get("Text"):
+            snippets.append(
+                EvidenceSnippet(
+                    source="web:ddg",
+                    title=topic.get("FirstURL"),
+                    url=topic.get("FirstURL"),
+                    snippet=topic.get("Text")
+                )
+            )
 
+    return snippets
 
 
 
