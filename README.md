@@ -4,7 +4,7 @@ AI Reality Integrity Engine is a full‑stack, end‑to‑end fact verification 
 ## Opus Workflow
 
 Automated pipeline configuration:
-https://workflow.opus.com/workflow/t15sqBnG4y9fN4np
+https://app.opus.com/app/workflow/share/074d27e4-929d-41b7-bc3f-a589621be865
 ## Demo Videos
 
 - AI Reality Engine (main demo) — included in the repository as `AI Reality Engine.mp4`
