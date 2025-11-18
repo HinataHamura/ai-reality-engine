@@ -1,200 +1,198 @@
-# AI Reality Engine
+🚨 AI Reality Integrity Engine
+A Full-Stack AI System for Automated Fact-Checking, Truth Scoring & Claim Verification
+AI Reality Integrity Engine is an end-to-end fact-verification platform that extracts factual claims from user text, retrieves evidence, performs NLI-based reasoning, and generates a final verdict with confidence scoring.
 
-AI Reality Engine is a modular toolkit for building, simulating, and deploying AI-driven agents and experiences in virtual and augmented reality environments. It provides building blocks for perception, decision-making, physics-aware interactions, and environment orchestration so you can prototype and scale immersive AI simulations quickly.
-** Demo video added in this repository**
-**Frontend video added also**  
-**Opus workflow has been added here**:
-Opus workflow: https://workflow.opus.com/workflow/t15sqBnG4y9fN4np
-Repository: https://github.com/HinataHamura/ai-reality-engine
+📌 Opus Workflow:
+https://workflow.opus.com/workflow/t15sqBnG4y9fN4np
 
-> NOTE: This README is a starting point. Customize examples, commands, and configuration to match the concrete structure and files in this repo.
+The project includes:
+✅ FastAPI backend (Grok-powered NLI engine)
+✅ Streamlit frontend (clean UI for verifying text)
+✅ Opus workflow (automated pipeline logic)
+✅ Demo video & frontend walk-through
+✅ DuckDuckGo fallback evidence system (Tavily-free)
 
----
+🎥 Demo Videos
 
-## Key features
+🔹 Main Demo Video: (included in repository)
+🔹 Frontend Walkthrough: (included in repository)
 
-- Modular agent architecture (perception, policy, action)
-- Environment adapters for common 3D/VR engines and simulation backends
-- Integration helpers for ML model inference and training pipelines
-- Replay logging and experiment tracking
-- Utilities for dataset collection, augmentation, and evaluation
+📌 Opus Workflow:
+https://workflow.opus.com/workflow/t15sqBnG4y9fN4np
 
----
+📌 Repository:
+https://github.com/HinataHamura/ai-reality-engine
 
-## Getting started
+🚀 Key Features
+🧩 1. Claim Extraction
 
-These instructions assume a typical Python-based development layout. Adjust language/tooling sections if your repository uses a different stack.
+Extracts factual statements automatically using Grok LLM.
 
-Prerequisites
-- Python 3.8+ (or the version your project requires)
-- pip
-- Virtual environment tool (venv, conda)
-- Optional: Docker (for containerized development)
+🔍 2. Evidence Retrieval
 
-Quickstart (local)
-1. Clone the repository
-   - git clone https://github.com/HinataHamura/ai-reality-engine.git
-   - cd ai-reality-engine
-2. Create a virtual environment and install dependencies
-   - python -m venv .venv
-   - source .venv/bin/activate  # macOS / Linux
-     or .venv\Scripts\activate   # Windows
-   - pip install -r requirements.txt
-3. Run a demo / smoke test
-   - python -m examples.run_demo
-   - or follow the usage examples in `examples/` (see below)
+Primary: DuckDuckGo Search
 
-Docker (optional)
-- Build image:
-  - docker build -t ai-reality-engine:latest .
-- Run container:
-  - docker run --rm -it -p 8888:8888 ai-reality-engine:latest
+Automatic fallback when Tavily is unavailable
 
-If your repo uses another language or engine (Unity, Unreal, Node.js), replace above commands with the appropriate build & run instructions.
+Cleanly structured evidence snippets
 
----
+🧠 3. NLI-powered Claim Verification
 
-## Project structure (recommended / example)
+Using Grok’s Llama-3 series model:
 
-Adjust to match the actual repo layout.
+SUPPORT
 
-- ai_reality_engine/        — core library modules (agents, perception, policies, env)
-- examples/                 — runnable examples and demos
-- scripts/                  — helper scripts (data conversion, training)
-- configs/                  — default config files for experiments
-- tests/                    — unit and integration tests
-- requirements.txt          — Python dependencies
-- Dockerfile                — optional container build
-- docs/                     — architecture docs & API references
+CONTRADICT
 
----
+NEUTRAL
 
-## Usage examples
+With reasoning + explanation.
 
-1) Run a single-agent simulation
-- python -m ai_reality_engine.runner --config configs/single_agent.yaml
+📊 4. Truth Score + Confidence Metric
 
-2) Launch a training job
-- python scripts/train.py --config configs/train/default.yaml --logdir runs/exp1
+Final judgment engine gives:
 
-3) Evaluate a saved model
-- python scripts/evaluate.py --model checkpoints/agent_epoch_10.pt --env configs/envs/room.yaml
+TRUE / FALSE / PARTIALLY SUPPORTED / UNVERIFIED
 
-Examples in the `examples/` directory show typical CLI patterns and code snippets.
+0–1 truth score
 
----
+Confidence score
 
-## Configuration
+🖥️ 5. Modern Frontend
 
-The project uses YAML-based configuration (recommended). Example keys:
-- env: environment adapter and parameters (scene, physics timestep)
-- agent: policy type, observation config, action space
-- training: optimizer, lr, batch size, number of steps
-- logging: experiment name, output directory, metrics backend
+Streamlit-based UI:
 
-Example environment variable overrides:
-- AI_RE_ENGINE_CONFIG=./configs/train/fast.yaml
-- PYTHONPATH=.
+Real-time verification
 
----
+JSON inspector
 
-## Development
+Claim list view
 
-- Run tests:
-  - pytest tests/
+Verdict visualization
 
-- Linting and formatting (if applicable):
-  - flake8 src/ tests/
-  - black .
+📦 Tech Stack
+Layer	Technologies
+Frontend	Streamlit, Python
+Backend	FastAPI, Grok API, DuckDuckGo API
+Evidence Search	DuckDuckGo (Free)
+LLM Reasoning	Grok: llama-3.3-70b-versatile
+Hosting	Render / GitHub Codespaces
+Ops	Opus Workflow automation
+🏗️ Project Structure
+ai-reality-engine/
+│
+├── backend/
+│   ├── main.py            # Fact-checking API (FastAPI)
+│   ├── requirements.txt
+│
+├── frontend/
+│   ├── app.py             # Streamlit UI
+│
+├── render.yaml            # Render deployment config
+├── README.md              # (this file)
+├── AI Reality Engine.mp4  # Demo video
+└── video-*.mp4            # Frontend video
 
-- Run type checks:
-  - mypy src/
+⚙️ Installation & Setup
+1. Clone the Repository
+git clone https://github.com/HinataHamura/ai-reality-engine.git
+cd ai-reality-engine
 
-Add pre-commit hooks if desired:
-- pip install pre-commit
-- pre-commit install
+🛠️ Backend Setup (FastAPI)
+Create virtual environment
+cd backend
+python -m venv .venv
+source .venv/bin/activate   # Linux/Mac
+.venv\Scripts\activate      # Windows
 
----
+Install dependencies
+pip install -r requirements.txt
 
-## Contributing
+Set API Keys (local)
 
-Contributions are welcome! A suggested workflow:
-1. Fork the repo and create a feature branch
-   - git checkout -b feat/my-feature
-2. Implement and add tests
-3. Run tests and linters locally
-4. Open a pull request describing the change
+Create .env inside /backend:
 
-Please follow the coding style and add unit tests for new functionality. Add reproducible examples for any new public API.
+GROK_API_KEY=your_grok_api_key
 
-If you want help shaping a feature or identifying good-first issues, open an issue describing the goal and constraints.
+Run Backend
+uvicorn main:app --reload --port 8000
 
----
 
-## Examples & Tutorials
+Backend available at:
 
-Place step-by-step guides in `docs/` or `examples/`:
-- Hello-world: run a minimal environment + random policy
-- Train-policy: full pipeline to train a reinforcement learning policy on a small scenario
-- Data collection: record sensory streams and save to dataset format
+http://localhost:8000
 
----
+🖥️ Frontend Setup (Streamlit)
+Install
+cd frontend
+pip install -r requirements.txt
 
-## Experiment tracking & logging
+Run
+streamlit run app.py
 
-Integrate with your preferred tooling:
-- TensorBoard: write logs to runs/ and view with tensorboard --logdir runs/
-- Weights & Biases / MLflow: optional integration (configure API keys via env vars)
-- Custom replay logs: use JSON/MsgPack for replays stored under logs/replays/
+🔗 Deploying on Render
 
----
+Your render.yaml automatically configures:
 
-## Testing & Benchmarks
+Backend service (FastAPI)
 
-- Unit tests: pytest, placed under tests/
-- Integration tests: smoke-run example scenarios and ensure no regressions
-- Performance: include small benchmarks for physics step time and inference latency
+Public URL
 
----
+Health checks
 
-## Security & Data handling
+Make sure BACKEND_URL in frontend is updated to:
 
-- Avoid committing large datasets, API keys, or credentials to the repository.
-- Use .gitignore to exclude logs, model checkpoints, and virtual environment directories.
-- For datasets with privacy concerns, document permitted usage and access controls.
+https://your-backend.onrender.com
 
----
+🧠 How the Engine Works (Pipeline)
+USER TEXT
+   ↓
+[1] Claim Extraction (LLM)
+   ↓
+[2] Evidence Retrieval (DuckDuckGo)
+   ↓
+[3] NLI Verification (SUPPORT / CONTRADICT / NEUTRAL)
+   ↓
+[4] Truth Score Computation
+   ↓
+[5] Summary Generation
+   ↓
+RESULT DISPLAYED IN FRONTEND
 
-## Roadmap & ideas
+📝 Example Input
+Coffee improves life expectancy.
+Pluto is a planet.
+The Mediterranean diet cures cancer.
 
-- Multi-agent coordination & communication
-- Real-time streaming integration with WebRTC for telepresence
-- Plugins for Unity and Unreal runtime adapters
-- On-device model optimization for AR glasses
+Output Example
+Claim	Result	Confidence
+Coffee improves life expectancy	✅ TRUE	0.80
+Pluto is a planet	❌ FALSE	0.80
+Mediterranean diet cures cancer	❌ FALSE	0.80
+🛠 Roadmap
 
-If you'd like, I can create issues for these roadmap items or split them into milestone-sized tasks.
+Planned enhancements:
 
----
+🌐 Add Wikipedia API evidence
 
-## License
+📚 Add multilingual fact-checking
 
-Add an explicit license file (e.g., LICENSE). If you want an MIT-style license, add a LICENSE file with MIT text. Replace this section with the chosen license.
+🧠 Add RAG-based evidence evaluation
 
----
+🔮 Add timeline verification for historical claims
 
-## Acknowledgements
+📸 Add image-based claim extraction
 
-- Contributors and collaborators
-- Libraries and frameworks used (list them in docs/ or the LICENSE/NOTICE area)
+🤝 Contributing
 
----
+Contributions welcome!
+Submit PRs or open issues.
 
-## Contact
+🛡️ License
 
-Repository: https://github.com/HinataHamura/ai-reality-engine
+MIT License (or specify your preferred).
+
+📬 Contact
+
 Maintainer: HinataHamura
-
-If you'd like, I can:
-- tailor this README to the repo's actual file structure and languages,
-- produce LICENSE, CONTRIBUTING.md, CODE_OF_CONDUCT, or issue templates,
-- or open draft issues for roadmap items.
+GitHub: https://github.com/HinataHamura
