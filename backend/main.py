@@ -277,13 +277,13 @@ Use language: {language}.
     return claims
 
 # ---------------------------------------------------------------------
-# Step 2 – Web retrieval (Tavily v1 compatible)
+# Step 2 – Web retrieval (Tavily 2025 API)
 # ---------------------------------------------------------------------
-async def retrieve_evidence_for_claim(claim: Claim, max_results: int = 4) -> List[EvidenceSnippet]:
+async def retrieve_evidence_for_claim(claim: Claim, max_results: int = 5) -> List[EvidenceSnippet]:
     if not TAVILY_API_KEY:
         return []
 
-    url = "https://api.tavily.com/v1/search"
+    url = "https://api.tavily.com/search"
 
     headers = {
         "Authorization": f"Bearer {TAVILY_API_KEY}",
@@ -301,9 +301,9 @@ async def retrieve_evidence_for_claim(claim: Claim, max_results: int = 4) -> Lis
 
     try:
         async with httpx.AsyncClient(timeout=30) as client:
-            r = await client.post(url, headers=headers, json=payload)
-            r.raise_for_status()
-            data = r.json()
+            response = await client.post(url, headers=headers, json=payload)
+            response.raise_for_status()
+            data = response.json()
 
     except Exception as e:
         print("[TAVILY ERROR]", e)
@@ -323,6 +323,7 @@ async def retrieve_evidence_for_claim(claim: Claim, max_results: int = 4) -> Lis
         )
 
     return snippets
+
 
 
 # ---------------------------------------------------------------------
