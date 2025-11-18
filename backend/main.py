@@ -341,7 +341,14 @@ async def verify_claim_with_evidence(
         for i, e in enumerate(evidence)
     ]
 
-    joined_evidence = "\n\n".join(evidence_texts) if evidence_texts else "NO_EVIDENCE_AVAILABLE"
+    if evidence_texts:
+    joined_evidence = "\n\n".join(evidence_texts)
+else:
+    joined_evidence = (
+        "General world knowledge only. No external evidence provided. "
+        "Use your factual understanding of history, geography, and common knowledge "
+        "to verify the claim."
+    )
 
     system_prompt = (
         "You are a rigorous fact-checking engine using Natural Language Inference (NLI). "
@@ -404,16 +411,27 @@ def aggregate_verdict(claim: Claim, verification: ClaimVerification) -> ClaimVer
 
     # Simple scoring formula similar to the earlier design
     truth_score = max(0.0, min(1.0, S - C))
-    confidence = max(0.1, S)  # minimum confidence
+    if verification.label == "SUPPORT":
+    confidence = max(0.80, S)
+    elif verification.label == "CONTRADICT":
+    confidence = max(0.80, C)
+    else:
+    confidence = 0.10
+
 
     if S >= 0.70 and C < 0.30:
         verdict = "VERIFIED"
     elif S >= 0.35 and C >= 0.30:
         verdict = "PARTIALLY_SUPPORTED"
+   elif verification.label == "CONTRADICT":
+    verdict = "FALSE"
+   elif verification.label == "SUPPORT":
+    verdict = "TRUE"
     elif S == 0 and C == 0:
-        verdict = "UNVERIFIED"
+    verdict = "UNVERIFIED"
     else:
-        verdict = "UNVERIFIED"
+    verdict = "UNVERIFIED"
+
 
     rationale = verification.explanation
 
