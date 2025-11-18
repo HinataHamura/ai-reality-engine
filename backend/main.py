@@ -206,7 +206,7 @@ async def _chat_json(system_prompt: str, user_prompt: str, model: Optional[str] 
     raw_text = await _call_grok_api(
     system,
     user_prompt,
-    model=model or "llama3-8b-8192",
+    model=model or "llama3-70b-8192",
     temperature=0.1
 )
 
