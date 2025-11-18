@@ -341,7 +341,7 @@ async def verify_claim_with_evidence(
         for i, e in enumerate(evidence)
     ]
 
-    if evidence_texts:
+if evidence_texts:
     joined_evidence = "\n\n".join(evidence_texts)
 else:
     joined_evidence = (
