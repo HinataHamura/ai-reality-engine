@@ -1,182 +1,200 @@
-🚨 **AI Reality Integrity Engine**
-A Full-Stack AI System for Automated Fact-Checking, Truth Scoring & Claim Verification
-AI Reality Integrity Engine is an end-to-end fact-verification platform that extracts factual claims from user text, retrieves evidence, performs NLI-based reasoning, and generates a final verdict with confidence scoring.
+# AI Reality Integrity Engine
 
-📌 **Opus Workflow**:
+AI Reality Integrity Engine is a full‑stack, end‑to‑end fact verification platform that extracts factual claims from user text, retrieves evidence, performs NLI‑based reasoning, and produces a final verdict plus confidence scoring.
+## Opus Workflow
+
+Automated pipeline configuration:
 https://workflow.opus.com/workflow/t15sqBnG4y9fN4np
+## Demo Videos
 
-The project includes:
-✅ FastAPI backend (Grok-powered NLI engine)
-✅ Streamlit frontend (clean UI for verifying text)
-✅ Opus workflow (automated pipeline logic)
-✅ Demo video & frontend walk-through
-✅ DuckDuckGo fallback evidence system (Tavily-free)
+- AI Reality Engine (main demo) — included in the repository as `AI Reality Engine.mp4`
+- Frontend walkthrough — included as `video-*.mp4`
+## Overview
 
-🎥**Demo Videos**
+This project implements an automated pipeline for claim extraction, evidence retrieval, and claim verification using modern LLMs and free evidence sources. It provides both a FastAPI backend (serving the verification engine) and a Streamlit frontend (interactive UI for users).
 
-🔹 Main Demo Video: (included in repository)
-🔹 Frontend Walkthrough: (included in repository)
+Key capabilities:
+- Automatic claim extraction from natural text (Grok LLM)
+- Evidence retrieval with DuckDuckGo (primary) and automatic fallback
+- NLI-based verification (SUPPORT / CONTRADICT / NEUTRAL) using Grok (llama-3.3-70b series)
+- Final truth scoring and confidence metrics
+- Streamlit frontend for inspection and visualization
+- Opus workflow to automate the pipeline
 
-📌 Repository:
-https://github.com/HinataHamura/ai-reality-engine
+Demo videos are included in the repository:
+- Main demo video
+- Frontend walkthrough video
 
-🚀 Key Features
-🧩 1. Claim Extraction
+## Features
 
-Extracts factual statements automatically using Grok LLM.
+- Claim Extraction: Extract factual statements from user‑submitted text using Grok LLM.
+- Evidence Retrieval: Retrieve structured evidence snippets primarily via DuckDuckGo. Automatic fallback when Tavily is unavailable.
+- NLI Verification: Run Natural Language Inference using Grok (Llama 3.3 70B) to produce SUPPORT, CONTRADICT or NEUTRAL for each claim along with reasoning.
+- Truth & Confidence Scoring: Verdicts mapped to TRUE / FALSE / PARTIALLY SUPPORTED / UNVERIFIED plus a 0–1 truth score and a confidence score.
+- Streamlit Frontend: Real‑time verification interface with JSON inspector, claim list, and visualization.
+- Automation: Opus workflow automates the end‑to‑end pipeline.
 
-🔍 2. Evidence Retrieval
+## Tech Stack
 
-Primary: DuckDuckGo Search
+- Frontend: Streamlit (Python)
+- Backend: FastAPI (Python)
+- Evidence Search: DuckDuckGo (free fallback)
+- LLM Reasoning: Grok (llama-3.3-70b‑versatile)
+- Orchestration: Opus workflow
+- Hosting examples: Render, GitHub Codespaces
 
-Automatic fallback when Tavily is unavailable
+## Project Structure
 
-Cleanly structured evidence snippets
+ai-reality-engine/
+│
+├── backend/
+│   ├── main.py            # FastAPI fact-checking API
+│   ├── requirements.txt
+│
+├── frontend/
+│   ├── app.py             # Streamlit UI
+│
+├── render.yaml            # Render deployment config
+├── README.md              # (this file)
+├── AI Reality Engine.mp4  # Demo video
+└── video-*.mp4            # Frontend video
 
-🧠 3. NLI-powered Claim Verification
+## Quickstart
 
-Using Grok’s Llama-3 series model:
+Clone the repository:
 
-SUPPORT
-
-CONTRADICT
-
-NEUTRAL
-
-With reasoning + explanation.
-
-📊 4. Truth Score + Confidence Metric
-
-Final judgment engine gives:
-
-TRUE / FALSE / PARTIALLY SUPPORTED / UNVERIFIED
-
-0–1 truth score
-
-Confidence score
-
-🖥️ 5. Modern Frontend
-
-Streamlit-based UI:
-
-Real-time verification
-
-JSON inspector
-
-Claim list view
-
-Verdict visualization
-
-📦 Tech Stack
-Layer	Technologies
-Frontend	Streamlit, Python
-Backend	FastAPI, Grok API, DuckDuckGo API
-Evidence Search	DuckDuckGo (Free)
-LLM Reasoning	Grok: llama-3.3-70b-versatile
-Hosting	Render / GitHub Codespaces
-Ops	Opus Workflow automation
-
-
-⚙️ Installation & Setup
-1. Clone the Repository
+```bash
 git clone https://github.com/HinataHamura/ai-reality-engine.git
 cd ai-reality-engine
+```
 
-🛠️ Backend Setup (FastAPI)
-Create virtual environment
-cd backend
-python -m venv .venv
-source .venv/bin/activate   # Linux/Mac
-.venv\Scripts\activate      # Windows
+### Backend (FastAPI)
 
-Install dependencies
-pip install -r requirements.txt
+1. Create and activate a Python virtual environment:
+   - Linux / macOS:
+     ```bash
+     cd backend
+     python -m venv .venv
+     source .venv/bin/activate
+     ```
+   - Windows:
+     ```powershell
+     cd backend
+     python -m venv .venv
+     .venv\Scripts\activate
+     ```
 
-Set API Keys (local)
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Create .env inside /backend:
+3. Set environment variables (create `.env` inside `/backend`):
+   ```
+   GROK_API_KEY=your_grok_api_key
+   ```
 
-GROK_API_KEY=your_grok_api_key
+4. Run the backend:
+   ```bash
+   uvicorn main:app --reload --port 8000
+   ```
 
-Run Backend
-uvicorn main:app --reload --port 8000
-
-
-Backend available at:
-
+Backend will be available at:
 http://localhost:8000
 
-🖥️ Frontend Setup (Streamlit)
-Install
-cd frontend
-pip install -r requirements.txt
+### Frontend (Streamlit)
 
-Run
-streamlit run app.py
+1. Install frontend dependencies:
+   ```bash
+   cd frontend
+   pip install -r requirements.txt
+   ```
 
-🔗 Deploying on Render
+2. Configure backend URL used by the frontend (e.g., in frontend configuration or environment):
+   ```
+   BACKEND_URL=http://localhost:8000
+   ```
 
-Your render.yaml automatically configures:
+3. Run Streamlit:
+   ```bash
+   streamlit run app.py
+   ```
 
-Backend service (FastAPI)
+Open the Streamlit UI in your browser (usually http://localhost:8501).
 
-Public URL
+## Deployment
 
-Health checks
+A sample `render.yaml` is included to configure deployment on Render. When deploying, update the frontend's BACKEND_URL to your deployed backend URL, for example:
 
-Make sure BACKEND_URL in frontend is updated to:
-
+```
 https://your-backend.onrender.com
+```
 
-🧠 How the Engine Works (Pipeline)
+## How it Works (Pipeline)
+
 USER TEXT
    ↓
-[1] Claim Extraction (LLM)
+1) Claim Extraction (LLM)
    ↓
-[2] Evidence Retrieval (DuckDuckGo)
+2) Evidence Retrieval (DuckDuckGo)
    ↓
-[3] NLI Verification (SUPPORT / CONTRADICT / NEUTRAL)
+3) NLI Verification (SUPPORT / CONTRADICT / NEUTRAL)
    ↓
-[4] Truth Score Computation
+4) Truth Score Computation
    ↓
-[5] Summary Generation
+5) Summary Generation
    ↓
 RESULT DISPLAYED IN FRONTEND
 
-📝 Example Input
-Coffee improves life expectancy.
-Pluto is a planet.
-The Mediterranean diet cures cancer.
+## Example Input / Output
 
-Output Example
-Claim	Result	Confidence
-Coffee improves life expectancy	✅ TRUE	0.80
-Pluto is a planet	❌ FALSE	0.80
-Mediterranean diet cures cancer	❌ FALSE	0.80
-🛠 Roadmap
+Example input:
+- "Coffee improves life expectancy."
+- "Pluto is a planet."
+- "The Mediterranean diet cures cancer."
+
+Example output table:
+
+| Claim                                  | Result                    | Confidence |
+|----------------------------------------|---------------------------|------------|
+| Coffee improves life expectancy        | ✅ TRUE                   | 0.80       |
+| Pluto is a planet                      | ❌ FALSE                  | 0.80       |
+| Mediterranean diet cures cancer        | ❌ FALSE                  | 0.80       |
+
+(These are example outputs; real outputs depend on the evidence retrieved and the model reasoning.)
+
+## Roadmap
 
 Planned enhancements:
+- Add Wikipedia API as an evidence source
+- Add multilingual fact‑checking
+- Add RAG (Retrieval-Augmented Generation) based evidence evaluation
+- Add timeline verification for historical claims
+- Add image-based claim extraction
+- Improve UI/UX and add more visualization components
 
-🌐 Add Wikipedia API evidence
+## Contributing
 
-📚 Add multilingual fact-checking
+Contributions are welcome! Please open issues or submit pull requests. Suggested workflow:
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes and add tests/documentation where applicable
+4. Submit a pull request describing your changes
 
-🧠 Add RAG-based evidence evaluation
+## License
 
-🔮 Add timeline verification for historical claims
+This project is released under the MIT License.
 
-📸 Add image-based claim extraction
+## Contact / Maintainer
 
-🤝 Contributing
-
-Contributions welcome!
-Submit PRs or open issues.
-
-🛡️ License
-
-MIT License
-
-📬 Contact
-
-Maintainer: Most.Atkia Farzana
+Maintainer: Most.Atkia Farzana  
 GitHub: https://github.com/HinataHamura
+
+
+---
+
+If you'd like, I can:
+- Produce a shorter README variant (one‑page quickstart)
+- Add badges (build, license, coverage)
+- Create example API docs and sample requests for the FastAPI backend
+Tell me which you'd prefer and I’ll update the README accordingly.
