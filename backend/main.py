@@ -277,41 +277,53 @@ Use language: {language}.
     return claims
 
 # ---------------------------------------------------------------------
-# Step 2 – Web retrieval (optional Tavily)
+# Step 2 – Web retrieval (Tavily v1 compatible)
 # ---------------------------------------------------------------------
 async def retrieve_evidence_for_claim(claim: Claim, max_results: int = 4) -> List[EvidenceSnippet]:
     if not TAVILY_API_KEY:
-        # graceful fallback: no web search available
         return []
 
+    url = "https://api.tavily.com/v1/search"
+
+    headers = {
+        "Authorization": f"Bearer {TAVILY_API_KEY}",
+        "Content-Type": "application/json",
+    }
+
     payload = {
-        "api_key": TAVILY_API_KEY,
         "query": claim.text,
         "max_results": max_results,
         "include_answer": False,
+        "include_raw_content": False,
+        "search_depth": "basic",
+        "topic": "general"
     }
 
     try:
-        async with httpx.AsyncClient(timeout=20) as client_http:
-            r = await client_http.post(TAVILY_URL, json=payload)
+        async with httpx.AsyncClient(timeout=30) as client:
+            r = await client.post(url, headers=headers, json=payload)
             r.raise_for_status()
             data = r.json()
+
     except Exception as e:
-        # Don't fail the whole pipeline if search breaks
-        print(f"[tavily] error: {e}")
+        print("[TAVILY ERROR]", e)
         return []
 
-    snippets: List[EvidenceSnippet] = []
-    for res in data.get("results", []):
+    results = data.get("results", [])
+    snippets = []
+
+    for res in results:
         snippets.append(
             EvidenceSnippet(
                 source="web:tavily",
                 url=res.get("url"),
                 title=res.get("title"),
-                snippet=res.get("content") or res.get("snippet") or "",
+                snippet=res.get("content") or "",
             )
         )
+
     return snippets
+
 
 # ---------------------------------------------------------------------
 # Step 3 – Claim verification (NLI)
