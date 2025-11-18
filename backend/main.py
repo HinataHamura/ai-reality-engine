@@ -48,7 +48,8 @@ GROK_API_URL = os.getenv(
 # If you still have an OpenAI key but want to use Grok, you can ignore OPENAI_API_KEY
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")  # kept for backward compatibility (not used)
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")  # optional
-TAVILY_URL = "https://api.tavily.com/search"
+TAVILY_URL = "https://api.tavily.com/v1/search"
+
 
 # Basic check so user gets a helpful error early
 if not GROK_API_KEY:
@@ -283,7 +284,8 @@ async def retrieve_evidence_for_claim(claim: Claim, max_results: int = 5) -> Lis
     if not TAVILY_API_KEY:
         return []
 
-    url = "https://api.tavily.com/search"
+    url = "https://api.tavily.com/v1/search"
+
 
     headers = {
         "Authorization": f"Bearer {TAVILY_API_KEY}",
