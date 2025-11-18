@@ -3,7 +3,7 @@
 AI Reality Engine is a modular toolkit for building, simulating, and deploying AI-driven agents and experiences in virtual and augmented reality environments. It provides building blocks for perception, decision-making, physics-aware interactions, and environment orchestration so you can prototype and scale immersive AI simulations quickly.
 ** Demo video added in this repository**
 **Frontend video added also**  
-**Opus workflow has been added here**
+**Opus workflow has been added here**:
 Opus workflow: https://workflow.opus.com/workflow/t15sqBnG4y9fN4np
 Repository: https://github.com/HinataHamura/ai-reality-engine
 
