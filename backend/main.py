@@ -277,13 +277,13 @@ Use language: {language}.
             continue
     return claims
 # ---------------------------------------------------------------------
-# Step 2 – Web retrieval (Tavily 2025 API)
+# Step 2 – Web retrieval (Correct Tavily API 2025)
 # ---------------------------------------------------------------------
 async def retrieve_evidence_for_claim(claim: Claim, max_results: int = 5) -> List[EvidenceSnippet]:
     if not TAVILY_API_KEY:
         return []
 
-    url = "https://api.tavily.com/v1/search"   # FIXED
+    url = "https://api.tavily.com/v1/search"
 
     headers = {
         "Authorization": f"Bearer {TAVILY_API_KEY}",
@@ -292,11 +292,10 @@ async def retrieve_evidence_for_claim(claim: Claim, max_results: int = 5) -> Lis
 
     payload = {
         "query": claim.text,
-        "max_results": max_results,
         "search_depth": "basic",
+        "max_results": max_results,
         "include_answer": False,
-        "include_raw_content": False,
-        "topic": "general"
+        "include_raw_content": False
     }
 
     try:
@@ -305,12 +304,17 @@ async def retrieve_evidence_for_claim(claim: Claim, max_results: int = 5) -> Lis
             response.raise_for_status()
             data = response.json()
 
+    except httpx.HTTPStatusError as http_error:
+        print("[TAVILY ERROR] Status:", http_error.response.status_code, http_error.response.text)
+        return []
     except Exception as e:
-        print("[TAVILY ERROR]", e)
+        print("[TAVILY ERROR] Unknown:", e)
         return []
 
+    results = data.get("results", [])
     evidence_list = []
-    for res in data.get("results", []):
+
+    for res in results:
         evidence_list.append(
             EvidenceSnippet(
                 source="web:tavily",
@@ -321,6 +325,7 @@ async def retrieve_evidence_for_claim(claim: Claim, max_results: int = 5) -> Lis
         )
 
     return evidence_list
+
 
 
 
