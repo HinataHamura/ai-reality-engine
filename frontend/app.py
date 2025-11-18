@@ -12,21 +12,27 @@ load_dotenv()
 def detect_backend_url():
     """
     Detect backend URL automatically.
-    - If in GitHub Codespaces → build the forwarded URL automatically
-    - Else → use BACKEND_URL from .env or fallback to localhost
+    - If running in GitHub Codespaces → use forwarded URL
+    - Else → always default to deployed backend on Render
     """
     codespace = os.getenv("CODESPACE_NAME")
     port = os.getenv("BACKEND_PORT", "8000")
 
+    # If running in GitHub Codespaces → auto-generate correct forwarded URL
     if codespace:
         return f"https://{codespace}-{port}.app.github.dev"
 
-    return os.getenv("BACKEND_URL", "http://localhost:8000")
+    # Otherwise use deployed backend by default
+    return os.getenv(
+        "BACKEND_URL",
+        "https://ai-reality-engine.onrender.com"
+    )
 
 
 BACKEND_URL = detect_backend_url().rstrip("/")
 VERIFY_ENDPOINT = f"{BACKEND_URL}/verify"
 HEALTH_ENDPOINT = f"{BACKEND_URL}/health"
+
 
 
 # ---------------------------
