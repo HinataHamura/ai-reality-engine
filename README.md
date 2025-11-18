@@ -1,8 +1,8 @@
-🚨 AI Reality Integrity Engine
+🚨 **AI Reality Integrity Engine**
 A Full-Stack AI System for Automated Fact-Checking, Truth Scoring & Claim Verification
 AI Reality Integrity Engine is an end-to-end fact-verification platform that extracts factual claims from user text, retrieves evidence, performs NLI-based reasoning, and generates a final verdict with confidence scoring.
 
-📌 Opus Workflow:
+📌 **Opus Workflow**:
 https://workflow.opus.com/workflow/t15sqBnG4y9fN4np
 
 The project includes:
@@ -12,13 +12,10 @@ The project includes:
 ✅ Demo video & frontend walk-through
 ✅ DuckDuckGo fallback evidence system (Tavily-free)
 
-🎥 Demo Videos
+🎥**Demo Videos**
 
 🔹 Main Demo Video: (included in repository)
 🔹 Frontend Walkthrough: (included in repository)
-
-📌 Opus Workflow:
-https://workflow.opus.com/workflow/t15sqBnG4y9fN4np
 
 📌 Repository:
 https://github.com/HinataHamura/ai-reality-engine
@@ -190,9 +187,9 @@ Submit PRs or open issues.
 
 🛡️ License
 
-MIT License (or specify your preferred).
+MIT License
 
 📬 Contact
 
-Maintainer: HinataHamura
+Maintainer: Most.Atkia Farzana
 GitHub: https://github.com/HinataHamura
