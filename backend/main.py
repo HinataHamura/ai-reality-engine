@@ -142,14 +142,14 @@ async def _call_grok_api(system_prompt: str, user_prompt: str, model: Optional[s
 
     # Generic payload — adapt to your Grok provider's expected schema if needed
     grok_payload = {
+        "model": model or "llama-3.3-70b-versatile",
         "messages": [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},
         ],
         "temperature": temperature,
     }
-    if model:
-        grok_payload["model"] = model
+
 
     try:
         async with httpx.AsyncClient(timeout=60) as client:
@@ -203,7 +203,13 @@ async def _chat_json(system_prompt: str, user_prompt: str, model: Optional[str] 
     )
     system = system_prompt + "\n\n" + json_instruction
 
-    raw_text = await _call_grok_api(system, user_prompt, model=model, temperature=0.1)
+    raw_text = await _call_grok_api(
+    system,
+    user_prompt,
+    model=model or "llama3-8b-8192",
+    temperature=0.1
+)
+
 
     # The model may return JSON directly, or return text that contains JSON. Try to extract JSON.
     # First attempt: parse raw_text as JSON directly.
